@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anuradha Raghuwanshi — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0d0d0d;
+    --surface: #141414;
+    --card: #1a1a1a;
+    --accent: #c8f562;
+    --accent2: #f5c842;
+    --text: #e8e4dc;
+    --muted: #666;
+    --border: #2a2a2a;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.2rem 3rem;
+    background: rgba(13,13,13,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.1rem; letter-spacing: 0.02em; }
+  .nav-links { display: flex; gap: 2rem; }
+  .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    text-align: center;
+    padding: 8rem 2rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 50% at 50% 40%, rgba(200,245,98,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-tag {
+    display: inline-block;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    padding: 0.3rem 1rem;
+    border-radius: 2rem;
+    margin-bottom: 2rem;
+    animation: fadeUp 0.6s ease both;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 8vw, 6.5rem);
+    line-height: 1.05;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    animation: fadeUp 0.7s ease 0.1s both;
+  }
+  .hero h1 em { font-style: italic; color: var(--accent); }
+  .hero-sub {
+    margin-top: 1.5rem;
+    font-size: 0.85rem;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    animation: fadeUp 0.7s ease 0.2s both;
+  }
+  .hero-cta {
+    margin-top: 3rem;
+    display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+    animation: fadeUp 0.7s ease 0.3s both;
+  }
+  .btn {
+    display: inline-block;
+    padding: 0.75rem 2rem;
+    border-radius: 0.3rem;
+    text-decoration: none;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: all 0.2s;
+    font-family: 'DM Mono', monospace;
+  }
+  .btn-primary { background: var(--accent); color: #000; font-weight: 500; }
+  .btn-primary:hover { background: #d4f870; transform: translateY(-2px); }
+  .btn-outline { border: 1px solid var(--border); color: var(--muted); }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* SECTIONS */
+  section { padding: 6rem 2rem; max-width: 900px; margin: 0 auto; }
+  .section-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    font-weight: 700;
+    margin-bottom: 3rem;
+    line-height: 1.1;
+  }
+
+  /* ABOUT */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+  @media (max-width: 640px) { .about-grid { grid-template-columns: 1fr; } }
+  .about-text { font-size: 0.9rem; color: #aaa; line-height: 1.9; }
+  .about-stats { display: flex; flex-direction: column; gap: 1.2rem; }
+  .stat-item { border-left: 2px solid var(--accent); padding-left: 1.2rem; }
+  .stat-num { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--text); }
+  .stat-label { font-size: 0.7rem; letter-spacing: 0.1em; color: var(--muted); text-transform: uppercase; }
+
+  /* SKILLS */
+  .skills-grid { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+  .skill-pill {
+    padding: 0.45rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: 0.25rem;
+    font-size: 0.75rem;
+    color: var(--muted);
+    transition: all 0.2s;
+    cursor: default;
+  }
+  .skill-pill:hover { border-color: var(--accent); color: var(--accent); }
+  .skill-pill.highlight { border-color: rgba(200,245,98,0.3); color: var(--accent); background: rgba(200,245,98,0.05); }
+
+  /* PROJECTS */
+  .projects-grid { display: grid; gap: 1.5rem; }
+  .project-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 0.5rem;
+    padding: 2rem;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .project-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+  .project-header { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.8rem; }
+  .project-title { font-family: 'Playfair Display', serif; font-size: 1.3rem; }
+  .project-date { font-size: 0.7rem; color: var(--muted); letter-spacing: 0.08em; }
+  .project-desc { font-size: 0.82rem; color: #aaa; line-height: 1.8; margin-bottom: 1.2rem; }
+  .project-links { display: flex; gap: 0.8rem; }
+  .project-link {
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(200,245,98,0.3);
+    padding-bottom: 1px;
+    transition: border-color 0.2s;
+  }
+  .project-link:hover { border-color: var(--accent); }
+  .project-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1rem; }
+  .tag { font-size: 0.65rem; color: var(--muted); background: var(--surface); border: 1px solid var(--border); padding: 0.2rem 0.6rem; border-radius: 2rem; }
+
+  /* EDUCATION & CERTS */
+  .timeline { display: flex; flex-direction: column; gap: 1.5rem; }
+  .timeline-item {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 1.5rem;
+    align-items: start;
+  }
+  @media (max-width: 560px) { .timeline-item { grid-template-columns: 1fr; } }
+  .timeline-year { font-size: 0.7rem; color: var(--muted); letter-spacing: 0.06em; padding-top: 0.2rem; }
+  .timeline-content { border-left: 1px solid var(--border); padding-left: 1.5rem; position: relative; }
+  .timeline-content::before {
+    content: ''; position: absolute; left: -4px; top: 0.45rem;
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--accent);
+  }
+  .timeline-role { font-family: 'Playfair Display', serif; font-size: 1.05rem; margin-bottom: 0.2rem; }
+  .timeline-org { font-size: 0.78rem; color: var(--muted); }
+  .timeline-grade { font-size: 0.72rem; color: var(--accent2); margin-top: 0.2rem; }
+
+  /* CONTACT */
+  .contact-box {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 0.5rem;
+    padding: 3rem;
+    text-align: center;
+  }
+  .contact-box p { color: var(--muted); font-size: 0.85rem; margin-bottom: 2rem; }
+  .contact-links { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2rem 3rem;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 0.7rem; color: var(--muted);
+    flex-wrap: wrap; gap: 1rem;
+  }
+
+  /* DIVIDER */
+  hr.divider { border: none; border-top: 1px solid var(--border); max-width: 900px; margin: 0 auto; }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .fade-up { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Anuradha R.</div>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#projects">Projects</a>
+    <a href="#education">Education</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div>
+    <div class="hero-tag">Data Analyst · AI Student · Founder</div>
+    <h1>Anuradha<br><em>Raghuwanshi</em></h1>
+    <p class="hero-sub">Turning raw data into actionable stories &mdash; with SQL, Python &amp; Tableau</p>
+    <div class="hero-cta">
+      <a href="#projects" class="btn btn-primary">View Projects</a>
+      <a href="#contact" class="btn btn-outline">Get in Touch</a>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ABOUT -->
+<section id="about" class="fade-up">
+  <div class="section-label">01 / About</div>
+  <h2 class="section-title">Who I Am</h2>
+  <div class="about-grid">
+    <p class="about-text">
+      I'm a second-year B.Tech student in Artificial Intelligence at Newton School of Technology, Rishihood University. I specialize in data analysis, visualization, and deriving business insights from complex datasets.<br><br>
+      Beyond academics, I'm the Founder of <strong>SnacQo</strong> and have interned at <strong>Orgea</strong>, where I gained hands-on experience in business operations, strategy, and execution. I believe good data tells a story — my job is to help it speak clearly.
+    </p>
+    <div class="about-stats">
+      <div class="stat-item">
+        <div class="stat-num">2+</div>
+        <div class="stat-label">Data Projects Shipped</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">2</div>
+        <div class="stat-label">Certifications Earned</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">97.6%</div>
+        <div class="stat-label">Class X Score</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- SKILLS -->
+<section id="skills" class="fade-up">
+  <div class="section-label">02 / Skills</div>
+  <h2 class="section-title">What I Work With</h2>
+  <div class="skills-grid">
+    <span class="skill-pill highlight">Python</span>
+    <span class="skill-pill highlight">SQL</span>
+    <span class="skill-pill highlight">Tableau</span>
+    <span class="skill-pill highlight">Pandas</span>
+    <span class="skill-pill">NumPy</span>
+    <span class="skill-pill">Matplotlib</span>
+    <span class="skill-pill">Excel</span>
+    <span class="skill-pill">MySQL</span>
+    <span class="skill-pill">Google Sheets</span>
+    <span class="skill-pill">Git &amp; GitHub</span>
+    <span class="skill-pill">Data Cleaning</span>
+    <span class="skill-pill">Exploratory Data Analysis</span>
+    <span class="skill-pill">Dashboard Design</span>
+    <span class="skill-pill">Agile / Scrum</span>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- PROJECTS -->
+<section id="projects" class="fade-up">
+  <div class="section-label">03 / Projects</div>
+  <h2 class="section-title">Work I'm Proud Of</h2>
+  <div class="projects-grid">
+
+    <div class="project-card">
+      <div class="project-header">
+        <div class="project-title">EV Vehicles Analysis</div>
+        <div class="project-date">April 2026</div>
+      </div>
+      <p class="project-desc">
+        Built an interactive Tableau dashboard to analyze EV adoption trends, geographic distribution, and manufacturer insights. Implemented filters, maps, and charts to convert raw data into actionable business intelligence.
+      </p>
+      <div class="project-tags">
+        <span class="tag">Tableau</span>
+        <span class="tag">Data Visualization</span>
+        <span class="tag">Business Insights</span>
+        <span class="tag">Geospatial</span>
+      </div>
+      <div class="project-links" style="margin-top:1.2rem;">
+        <a href="https://github.com/anuradha-r18/EV-VehiclesAnalysisTableau" class="project-link">GitHub →</a>
+        <a href="https://public.tableau.com/app/profile/anuradha.raghuwanshi/viz/EVVehiclesAnalysis_17772959942160/Dashboard1" class="project-link">Live Demo →</a>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-header">
+        <div class="project-title">Airbnb Price Optimization</div>
+        <div class="project-date">February 2026</div>
+      </div>
+      <p class="project-desc">
+        Analyzed Airbnb listing data to identify pricing trends based on location, room type, and availability. Applied data cleaning, filtering, and formulas in Google Sheets and created dashboards to surface actionable insights.
+      </p>
+      <div class="project-tags">
+        <span class="tag">Google Sheets</span>
+        <span class="tag">Data Cleaning</span>
+        <span class="tag">Visualization</span>
+        <span class="tag">Pricing Analysis</span>
+      </div>
+      <div class="project-links" style="margin-top:1.2rem;">
+        <a href="https://github.com/Pratiti-paul/AirbnbPriceOptimization" class="project-link">GitHub →</a>
+        <a href="https://docs.google.com/spreadsheets/d/1iv4IYO7_5XU-LX0PTAnXMtdjaLhI2MdWnNOy-r2jBWw/edit?pli=1&gid=42358888#gid=42358888" class="project-link">Live Demo →</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- EDUCATION -->
+<section id="education" class="fade-up">
+  <div class="section-label">04 / Education &amp; Certifications</div>
+  <h2 class="section-title">Learning Path</h2>
+  <div class="timeline">
+
+    <div class="timeline-item">
+      <div class="timeline-year">2024 – 2028</div>
+      <div class="timeline-content">
+        <div class="timeline-role">B.Tech — Artificial Intelligence</div>
+        <div class="timeline-org">Newton School of Technology, Rishihood University</div>
+        <div class="timeline-grade">GPA: 7.435 / 10.0</div>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-year">2022 – 2023</div>
+      <div class="timeline-content">
+        <div class="timeline-role">Intermediate — Class XII</div>
+        <div class="timeline-org">S.L. Memorial Senior Secondary School</div>
+        <div class="timeline-grade">75.6%</div>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-year">2020 – 2021</div>
+      <div class="timeline-content">
+        <div class="timeline-role">Matriculation — Class X</div>
+        <div class="timeline-org">Alpha English High School</div>
+        <div class="timeline-grade">97.6%</div>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-year">June 2025</div>
+      <div class="timeline-content">
+        <div class="timeline-role">AI Master Class</div>
+        <div class="timeline-org">NoviTech R&amp;D Private Limited — 30-day program on AI concepts &amp; real-world applications</div>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-year">March 2025</div>
+      <div class="timeline-content">
+        <div class="timeline-role">Nesternship</div>
+        <div class="timeline-org">Nestlé — Youth Program</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- CONTACT -->
+<section id="contact" class="fade-up">
+  <div class="section-label">05 / Contact</div>
+  <h2 class="section-title">Let's Connect</h2>
+  <div class="contact-box">
+    <p>Open to internships, collaborations, and data projects.<br>Reach out anytime.</p>
+    <div class="contact-links">
+      <a href="mailto:anuradha.raghuwanshi2024@nst.rishihood.edu.in" class="btn btn-primary">Send Email</a>
+      <a href="https://linkedin.com" target="_blank" class="btn btn-outline">LinkedIn</a>
+      <a href="https://github.com" target="_blank" class="btn btn-outline">GitHub</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 Anuradha Raghuwanshi</span>
+  <span>Built with care &mdash; Data Analyst &amp; AI Student</span>
+</footer>
+
+<script>
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
